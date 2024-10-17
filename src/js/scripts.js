@@ -196,6 +196,18 @@ gui.add(options, "intensity", 0, 1);
 
 let step = 0;
 
+const mousePosition = new THREE.Vector2();
+
+window.addEventListener("mousemove", function (e) {
+  mousePosition.x = (e.clientX / this.window.innerWidth) * 2 - 1;
+  mousePosition.y = (e.clientY / this.window.innerHeight) * 2 + 1;
+});
+
+const rayCaster = new THREE.Raycaster();
+
+const sphereId = sphere.id;
+box2.name = "theBox";
+
 function animate(time) {
   box.rotation.x = time / 1000;
   box.rotation.y = time / 1000;
@@ -207,6 +219,20 @@ function animate(time) {
   spotLight.penumbra = options.penumbra;
   spotLight.intensity = options.intensity;
   spotLightHelper.update();
+
+  rayCaster.setFromCamera(mousePosition, camera);
+  const intersects = rayCaster.intersectObjects(scene.children);
+  console.log(intersects);
+
+  for (let i = 0; i < intersects.length; i++) {
+    if (intersects[i].object.id === sphereId)
+      intersects[i].object.material.color.set(0xff0000);
+
+    if (intersects[i].object.name === "theBox") {
+      intersects[i].object.rotation.x = time / 1000;
+      intersects[i].object.rotation.y = time / 1000;
+    }
+  }
 
   renderer.render(scene, camera);
 }
