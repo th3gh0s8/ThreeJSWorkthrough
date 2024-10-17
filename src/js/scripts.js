@@ -138,6 +138,24 @@ scene.background = textureLoder.load(stars);
 //   stars
 // ]);
 
+const boxGeometry2 = new THREE.BoxGeometry(4, 4, 4);
+const boxMaterial2 = new THREE.MeshBasicMaterial({
+  // color: 0x00ff00,
+  // map: textureLoder.load(nebula),
+});
+const box2MultyMeterial = [
+  new THREE.MeshBasicMaterial({ map: textureLoder.load(stars) }),
+  new THREE.MeshBasicMaterial({ map: textureLoder.load(stars) }),
+  new THREE.MeshBasicMaterial({ map: textureLoder.load(stars) }),
+  new THREE.MeshBasicMaterial({ map: textureLoder.load(nebula) }),
+  new THREE.MeshBasicMaterial({ map: textureLoder.load(nebula) }),
+  new THREE.MeshBasicMaterial({ map: textureLoder.load(nebula) }),
+];
+const box2 = new THREE.Mesh(boxGeometry2, box2MultyMeterial);
+scene.add(box2);
+box2.position.set(0, 15, 10);
+// box2.material.map = textureLoder.load(nebula);
+
 const gui = new dat.GUI();
 
 const options = {
